@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noreste Throwdown 2026 · WIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── VARIABLES ── */
+:root {
+  --morado:       #7C3AED;
+  --morado-claro: #A78BFA;
+  --morado-suave: #EDE9FE;
+  --azul:         #2563EB;
+  --azul-claro:   #60A5FA;
+  --azul-suave:   #DBEAFE;
+  --verde:        #059669;
+  --verde-claro:  #34D399;
+  --verde-suave:  #D1FAE5;
+  --blanco:       #FFFFFF;
+  --gris-bg:      #F8F9FC;
+  --gris-borde:   #E5E7EB;
+  --gris-texto:   #6B7280;
+  --negro:        #111827;
+  --dash-bg:      #0B0C11;
+  --dash-panel:   #13141C;
+  --dash-card:    #1C1E28;
+  --dash-line:    rgba(255,255,255,0.07);
+  --dash-t1:      #FFFFFF;
+  --dash-t2:      rgba(255,255,255,0.5);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--negro);}
+a{color:inherit;}
+
+/* ── HERO ── */
+.hero{background:var(--negro);position:relative;overflow:hidden;padding:3.5rem 1.5rem 2.5rem;text-align:center;}
+.hero-blob1{position:absolute;top:-80px;left:-80px;width:320px;height:320px;border-radius:50%;background:var(--morado);opacity:.18;pointer-events:none;}
+.hero-blob2{position:absolute;bottom:-100px;right:-60px;width:360px;height:360px;border-radius:50%;background:var(--verde);opacity:.12;pointer-events:none;}
+.hero-blob3{position:absolute;top:30px;right:20%;width:180px;height:180px;border-radius:50%;background:var(--azul);opacity:.1;pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--verde-claro);font-weight:500;margin-bottom:.75rem;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,13vw,88px);line-height:.9;color:var(--blanco);letter-spacing:.04em;margin-bottom:.6rem;}
+.hero h1 .highlight{color:var(--morado-claro);}
+.hero-date{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1.75rem;}
+.cats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+.cat-pill{font-size:12px;font-weight:500;padding:5px 14px;border-radius:999px;border:1px solid;}
+.cat-p{border-color:var(--verde-claro);color:var(--verde-claro);}
+.cat-i{border-color:var(--azul-claro);color:var(--azul-claro);}
+.cat-a{border-color:var(--morado-claro);color:var(--morado-claro);}
+.hero-badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;}
+.badge{font-size:11px;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:4px;}
+.badge+.badge::before{content:'·';margin-right:2px;color:rgba(255,255,255,.2);}
+.hero-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--morado),var(--azul));color:var(--blanco);font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;padding:13px 30px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .15s;letter-spacing:.02em;}
+.hero-btn:hover{opacity:.88;transform:translateY(-1px);}
+.hero-btn:active{transform:translateY(0);}
+
+/* ── NAV ── */
+.nav-wrap{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--gris-borde);position:sticky;top:0;z-index:100;}
+.nav-tabs{display:flex;max-width:720px;margin:0 auto;padding:0 1rem;}
+.nav-tab{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:14px 18px;cursor:pointer;color:var(--gris-texto);border:none;border-bottom:2px solid transparent;background:none;transition:color .15s,border-color .15s;white-space:nowrap;}
+.nav-tab:hover{color:var(--negro);}
+.nav-tab.active{color:var(--morado);border-bottom-color:var(--morado);}
+
+/* ── CONTENT ── */
+.content{max-width:720px;margin:0 auto;padding:2rem 1rem 5rem;}
+.panel{display:none;}
+.panel.active{display:block;}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:1rem;}
+
+/* ── WOD CARDS ── */
+.wod-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;padding:0;margin-bottom:12px;overflow:hidden;border-left:5px solid var(--gris-borde);transition:box-shadow .2s,transform .2s;}
+.wod-card:hover{box-shadow:0 6px 28px rgba(0,0,0,.08);transform:translateY(-1px);}
+.wod-card.wod1{border-left-color:var(--verde);}
+.wod-card.wod2{border-left-color:var(--azul);}
+.wod-card.wod3{border-left-color:#7C3AED;}
+.wod-card.wod4{border-left-color:#F59E0B;}
+.wod-card.pending{border-left-color:var(--gris-borde);}
+.wod-header{padding:1.25rem 1.25rem 0 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.wod-num{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:3px;}
+.wod-name{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em;color:var(--negro);margin-bottom:2px;line-height:1;}
+.wod-subtitle{font-size:13px;font-weight:600;color:var(--negro);margin-bottom:2px;}
+.wod-cap{font-size:11px;color:var(--gris-texto);}
+.wod-type{font-size:11px;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap;flex-shrink:0;}
+.type-fortime{background:var(--verde-suave);color:var(--verde);}
+.type-maxload{background:var(--azul-suave);color:var(--azul);}
+.type-pending{background:var(--gris-bg);color:var(--gris-texto);border:1px solid var(--gris-borde);}
+.wod-movements{padding:10px 1.25rem 0;display:flex;flex-wrap:wrap;gap:6px;}
+.move-pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;background:var(--gris-bg);border:1px solid var(--gris-borde);color:var(--gris-texto);}
+.wod-desc{margin:12px 1.25rem 0;padding:12px 14px;background:var(--gris-bg);border-radius:10px;font-size:12.5px;color:#374151;line-height:1.75;}
+.wod-score{margin:10px 1.25rem 1.25rem;padding:10px 14px;background:var(--morado-suave);border-radius:10px;font-size:12px;color:var(--morado);line-height:1.65;}
+.wod-score strong{font-weight:600;}
+.wod-pending-body{padding:1.25rem;display:flex;align-items:center;gap:10px;}
+.wod-coming{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--gris-texto);background:var(--gris-bg);border:1px solid var(--gris-borde);padding:5px 12px;border-radius:999px;}
+.wod-footer-note{margin-top:1.5rem;text-align:center;font-size:12px;color:var(--gris-texto);line-height:1.7;padding:1rem 1.25rem;background:var(--blanco);border:1px dashed var(--gris-borde);border-radius:12px;}
+
+/* ── ATHLETE BLOCKS ── */
+.athlete-blocks{display:flex;flex-direction:column;gap:6px;padding:10px 1.25rem 0;}
+.athlete-block{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1px solid var(--gris-borde);background:var(--gris-bg);}
+.ath-num{width:24px;height:24px;border-radius:50%;background:var(--azul);color:var(--blanco);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ath-move{font-size:12.5px;color:var(--negro);font-weight:500;}
+
+/* ── SEMIFINAL ANNOUNCE CARD ── */
+.semifinal-card{background:linear-gradient(135deg,rgba(245,158,11,.07),rgba(124,58,237,.07));border:1px solid rgba(245,158,11,.25);border-left:4px solid #F59E0B;border-radius:14px;padding:1.2rem 1.25rem;display:flex;align-items:flex-start;gap:.875rem;margin-bottom:12px;}
+.sf-icon{font-size:26px;flex-shrink:0;margin-top:1px;}
+.sf-content h4{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:.04em;color:#B45309;margin-bottom:4px;}
+.sf-content p{font-size:12.5px;color:var(--gris-texto);line-height:1.65;}
+
+/* ── WAIVER ── */
+.waiver-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.waiver-header{background:linear-gradient(135deg,var(--morado) 0%,var(--azul) 100%);padding:1.5rem;color:var(--blanco);}
+.waiver-header h3{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.06em;margin-bottom:4px;}
+.waiver-header p{font-size:12px;opacity:.7;}
+.waiver-body{padding:1.5rem;}
+.waiver-clauses{font-size:12.5px;color:var(--gris-texto);line-height:1.75;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--gris-borde);max-height:200px;overflow-y:auto;}
+.waiver-clauses h4{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--negro);margin:12px 0 4px;}
+.waiver-clauses h4:first-child{margin-top:0;}
+.download-box{background:linear-gradient(135deg,var(--verde-suave),var(--azul-suave));border:1px solid var(--gris-borde);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;}
+.dl-icon{width:48px;height:48px;border-radius:10px;background:var(--verde);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.dl-text h4{font-size:14px;font-weight:600;color:var(--negro);margin-bottom:3px;}
+.dl-text p{font-size:12px;color:var(--gris-texto);line-height:1.5;}
+.dl-btn{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:var(--verde);color:var(--blanco);font-family:'DM Sans',sans-serif;font-weight:600;font-size:12px;padding:8px 16px;border-radius:8px;text-decoration:none;transition:background .2s,transform .15s;}
+.dl-btn:hover{background:#047857;transform:translateY(-1px);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-label{font-size:11px;font-weight:600;color:var(--gris-texto);letter-spacing:.05em;text-transform:uppercase;}
+.form-group input,.form-group select{font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--gris-borde);border-radius:8px;background:var(--gris-bg);color:var(--negro);outline:none;transition:border-color .15s,box-shadow .15s;}
+.form-group input:focus,.form-group select:focus{border-color:var(--morado);background:var(--blanco);box-shadow:0 0 0 3px rgba(124,58,237,.1);}
+.mb12{margin-bottom:12px;}
+.checkbox-row{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--gris-texto);line-height:1.65;margin:16px 0;padding:14px;background:var(--gris-bg);border-radius:8px;}
+.checkbox-row input{margin-top:2px;flex-shrink:0;accent-color:var(--morado);}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--morado),var(--azul));color:var(--blanco);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:opacity .2s,transform .15s;}
+.submit-btn:hover{opacity:.88;transform:translateY(-1px);}
+.submit-btn:active{transform:translateY(0);}
+.submit-btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+.form-success{text-align:center;padding:2rem 1rem;color:var(--verde);}
+.form-success .success-icon{font-size:40px;margin-bottom:.75rem;}
+.form-success h4{font-size:16px;font-weight:700;margin-bottom:6px;}
+.form-success p{font-size:13px;color:var(--gris-texto);}
+
+/* ── FOTOS / GALLERY ── */
+.foto-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:14px;overflow:hidden;text-align:center;margin-bottom:16px;}
+.foto-header{background:linear-gradient(135deg,var(--azul) 0%,var(--morado) 100%);padding:2.5rem 1.5rem;color:var(--blanco);}
+.foto-icon{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:30px;}
+.foto-header h3{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.06em;margin-bottom:6px;}
+.foto-header p{font-size:13px;opacity:.75;}
+.foto-body{padding:1.5rem;}
+.foto-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+.foto-tag{font-size:11px;font-weight:500;padding:4px 12px;border-radius:999px;}
+.ft-verde{background:var(--verde-suave);color:var(--verde);}
+.ft-azul{background:var(--azul-suave);color:var(--azul);}
+.ft-morado{background:var(--morado-suave);color:var(--morado);}
+.foto-body p{font-size:13px;color:var(--gris-texto);line-height:1.7;margin-bottom:1.25rem;}
+.whatsapp-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:var(--blanco);font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;padding:13px 24px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;width:100%;transition:background .2s,transform .15s;}
+.whatsapp-btn:hover{background:#1ebe5d;transform:translateY(-1px);}
+
+/* ── GALLERY GRID ── */
+.gallery-section{margin-top:20px;}
+.gallery-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.gallery-item{aspect-ratio:1;overflow:hidden;border-radius:8px;cursor:pointer;position:relative;background:var(--gris-bg);border:1px solid var(--gris-borde);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+.gallery-item:hover img{transform:scale(1.06);}
+.gallery-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-empty{grid-column:1/-1;text-align:center;padding:2.5rem 1.5rem;color:var(--gris-texto);font-size:13px;line-height:1.7;border:1px dashed var(--gris-borde);border-radius:12px;}
+
+/* ── LIGHTBOX ── */
+.lightbox{position:fixed;inset:0;z-index:8500;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;padding:2rem;cursor:pointer;}
+.lightbox.hidden{display:none;}
+.lightbox-img-wrap{cursor:default;max-width:100%;max-height:85vh;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.lightbox-img-wrap img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.5);}
+.lightbox-caption{font-size:13px;color:rgba(255,255,255,.6);}
+.lightbox-close{position:absolute;top:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:white;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.lightbox-close:hover{background:rgba(255,255,255,.22);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(12px);padding:11px 22px;border-radius:999px;font-size:13px;font-weight:500;z-index:9990;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;white-space:nowrap;color:var(--blanco);}
+.toast.visible{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast-success{background:var(--verde);}
+.toast-error{background:#EF4444;}
+.toast-info{background:var(--morado);}
+
+/* ── FOOTER ── */
+.footer{background:var(--negro);color:rgba(255,255,255,.5);text-align:center;padding:2.5rem 1.5rem;margin-top:3rem;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.08em;color:var(--blanco);margin-bottom:4px;cursor:pointer;display:inline-block;user-select:none;transition:opacity .15s;}
+.footer-logo:hover{opacity:.8;}
+.footer-logo.logo-ping{animation:logoPing .12s ease;}
+@keyframes logoPing{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+.footer-sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;}
+.footer-social{display:inline-flex;align-items:center;gap:8px;color:var(--blanco);text-decoration:none;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:9px 18px;border-radius:999px;font-size:13px;font-weight:500;transition:background .2s;margin-bottom:1.5rem;}
+.footer-social:hover{background:rgba(255,255,255,.15);}
+.footer-copy{font-size:11px;}
+.logo-click-hint{font-size:10px;color:rgba(255,255,255,.15);margin-top:8px;letter-spacing:.05em;}
+
+/* ═══════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════ */
+.dash-overlay{position:fixed;inset:0;z-index:9000;background:var(--dash-bg);overflow:hidden;opacity:0;transition:opacity .3s;}
+.dash-overlay.dash-show{opacity:1;}
+
+/* LOGIN */
+.dash-login{display:none;align-items:center;justify-content:center;min-height:100vh;padding:1rem;background:radial-gradient(ellipse at 50% 35%,rgba(124,58,237,.18) 0%,transparent 68%);}
+.dash-login.active{display:flex;}
+.dash-login-card{background:var(--dash-panel);border:1px solid var(--dash-line);border-radius:20px;padding:2.5rem;width:100%;max-width:380px;}
+.dash-login-logo{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:.1em;line-height:1;background:linear-gradient(135deg,var(--morado-claro),var(--azul-claro));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem;}
+.dash-login-card h2{font-size:16px;font-weight:600;color:var(--dash-t1);margin-bottom:3px;}
+.dash-login-card > p{font-size:12px;color:var(--dash-t2);margin-bottom:2rem;}
+.dash-field{margin-bottom:14px;}
+.dash-field label{display:block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dash-t2);margin-bottom:6px;}
+.dash-field input{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--dash-line);border-radius:10px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--dash-t1);outline:none;transition:border-color .15s;}
+.dash-field input:focus{border-color:var(--morado-claro);}
+.dash-error{font-size:12px;color:#F87171;margin-bottom:12px;padding:8px 12px;background:rgba(239,68,68,.1);border-radius:8px;border:1px solid rgba(239,68,68,.2);display:none;}
+.dash-btn-primary{width:100%;padding:12px;background:linear-gradient(135deg,var(--morado),var(--azul));color:var(--blanco);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;transition:opacity .2s;}
+.dash-btn-primary:hover{opacity:.88;}
+.dash-btn-ghost{width:100%;padding:11px;background:transparent;color:var(--dash-t2);border:1px solid var(--dash-line);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:color .15s,border-color .15s;}
+.dash-btn-ghost:hover{color:var(--dash-t1);border-color:rgba(255,255,255,.2);}
+
+/* ADMIN LAYOUT */
+.dash-admin{display:none;height:100vh;overflow:hidden;}
+.dash-admin.active{display:flex;}
+.dash-sidebar{width:220px;flex-shrink:0;background:var(--dash-panel);border-right:1px solid var(--dash-line);display:flex;flex-direction:column;padding:1.5rem 1rem;}
+.dash-brand{margin-bottom:1.75rem;padding-left:.25rem;}
+.dash-brand-wrd{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.1em;line-height:1;background:linear-gradient(135deg,var(--morado-claro),var(--azul-claro));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.dash-brand-sub{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dash-t2);margin-top:2px;}
+.dash-nav{display:flex;flex-direction:column;gap:3px;flex:1;}
+.dash-nav-btn{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:none;background:transparent;color:var(--dash-t2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;width:100%;}
+.dash-nav-btn:hover{background:rgba(255,255,255,.06);color:var(--dash-t1);}
+.dash-nav-btn.active{background:rgba(124,58,237,.18);color:var(--morado-claro);}
+.dash-nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
+.dash-logout-btn{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;border:1px solid var(--dash-line);background:transparent;color:var(--dash-t2);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;margin-top:.75rem;width:100%;}
+.dash-logout-btn:hover{color:#F87171;border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.06);}
+.dash-close-btn{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;border:none;background:transparent;color:var(--dash-t2);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:color .15s;margin-top:4px;width:100%;}
+.dash-close-btn:hover{color:var(--dash-t1);}
+
+/* MAIN AREA */
+.dash-main{flex:1;overflow-y:auto;background:var(--gris-bg);padding:2rem;}
+.dash-tab{display:none;}
+.dash-tab.active{display:block;}
+.dash-tab-title{font-size:20px;font-weight:700;color:var(--negro);margin-bottom:1.5rem;}
+.dash-tab-sub{font-size:12px;color:var(--gris-texto);margin-top:-1rem;margin-bottom:1.5rem;}
+
+/* METRIC CARDS */
+.dm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem;}
+.dm-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:12px;padding:1.1rem;}
+.dm-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:6px;}
+.dm-value{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:.04em;color:var(--negro);line-height:1;}
+.dm-meta{font-size:11px;color:var(--gris-texto);margin-top:3px;}
+.dm-card.dm-accent .dm-value{color:var(--morado);}
+.dm-card.dm-green .dm-value{color:var(--verde);}
+
+/* CHART */
+.dm-chart-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;}
+.dm-chart-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:1.25rem;}
+.dm-bars{display:flex;align-items:flex-end;gap:6px;height:72px;}
+.dm-bar-col{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.dm-bar-track{flex:1;width:100%;display:flex;align-items:flex-end;}
+.dm-bar{width:100%;background:linear-gradient(0deg,var(--morado),var(--azul-claro));border-radius:3px 3px 0 0;min-height:3px;transition:height .4s ease;}
+.dm-bar-lbl{font-size:9px;color:var(--gris-texto);text-align:center;text-transform:capitalize;}
+
+/* TAB ACTIVITY */
+.dm-tabs-activity{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;}
+.dm-act-row{display:grid;grid-template-columns:70px 1fr 36px;align-items:center;gap:10px;margin-bottom:10px;}
+.dm-act-row:last-child{margin-bottom:0;}
+.dm-act-label{font-size:12px;font-weight:500;color:var(--negro);}
+.dm-act-track{height:6px;background:var(--gris-bg);border-radius:999px;overflow:hidden;}
+.dm-act-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--morado),var(--azul-claro));transition:width .5s ease;}
+.dm-act-pct{font-size:11px;color:var(--gris-texto);text-align:right;}
+
+.dm-note{font-size:11px;color:var(--gris-texto);padding:10px 14px;background:var(--gris-bg);border-radius:8px;border:1px dashed var(--gris-borde);line-height:1.6;}
+
+/* GALLERY ADMIN */
+.dash-section-card{background:var(--blanco);border:1px solid var(--gris-borde);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;}
+.dash-section-card h3{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:1rem;padding-bottom:8px;border-bottom:1px solid var(--gris-borde);}
+.dash-row{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px;align-items:end;}
+.dash-input{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--gris-borde);border-radius:8px;background:var(--gris-bg);color:var(--negro);outline:none;transition:border-color .15s;}
+.dash-input:focus{border-color:var(--morado);background:var(--blanco);}
+.dash-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:5px;display:block;}
+.dash-btn-sm{padding:9px 16px;background:var(--morado);color:var(--blanco);border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+.dash-btn-sm:hover{opacity:.85;}
+.dash-btn-sm.green{background:var(--verde);}
+.dash-btn-sm.red{background:#EF4444;}
+.dash-gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
+.dash-photo{aspect-ratio:1;position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--gris-borde);background:var(--gris-bg);}
+.dash-photo img{width:100%;height:100%;object-fit:cover;}
+.dash-photo-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(239,68,68,.9);color:white;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;}
+.dash-photo:hover .dash-photo-del{opacity:1;}
+.dash-gallery-empty{text-align:center;padding:1.5rem;color:var(--gris-texto);font-size:12px;border:1px dashed var(--gris-borde);border-radius:8px;}
+
+/* CONTENT EDITOR */
+.dash-field-group{margin-bottom:14px;}
+.wod-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--gris-bg);border-radius:8px;margin-bottom:8px;}
+.wod-toggle-label{font-size:13px;font-weight:500;color:var(--negro);}
+.wod-toggle-status{font-size:11px;color:var(--gris-texto);margin-top:2px;}
+.switch{position:relative;width:40px;height:22px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.switch-slider{position:absolute;inset:0;background:var(--gris-borde);border-radius:999px;cursor:pointer;transition:.25s;}
+.switch-slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.25s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.switch input:checked+.switch-slider{background:var(--verde);}
+.switch input:checked+.switch-slider:before{transform:translateX(18px);}
+
+/* APPEARANCE */
+.color-presets{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
+.color-dot{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s;flex-shrink:0;}
+.color-dot.selected{border-color:var(--negro);transform:scale(.88);}
+.color-swatch-label{font-size:11px;color:var(--gris-texto);margin-top:4px;text-align:center;}
+.color-swatch-wrap{display:flex;flex-direction:column;align-items:center;}
+
+.dash-save-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--morado),var(--azul));color:var(--blanco);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:opacity .2s;margin-top:1rem;}
+.dash-save-btn:hover{opacity:.88;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .form-row{grid-template-columns:1fr;}
+  .hero h1{font-size:52px;}
+  .download-box{flex-direction:column;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .dm-grid{grid-template-columns:1fr 1fr;}
+  .dash-sidebar{width:190px;}
+  .dash-main{padding:1.25rem;}
+  .dash-gallery-grid{grid-template-columns:repeat(3,1fr);}
+  .dash-row{grid-template-columns:1fr;}
+  .dash-admin{flex-direction:column;}
+  .dash-sidebar{width:100%;height:auto;padding:1rem;flex-direction:row;align-items:center;flex-wrap:nowrap;overflow-x:auto;gap:4px;}
+  .dash-brand{margin-bottom:0;margin-right:auto;flex-shrink:0;}
+  .dash-brand-sub{display:none;}
+  .dash-nav{flex-direction:row;flex:none;gap:3px;}
+  .dash-nav-btn{padding:6px 10px;font-size:11px;}
+  .dash-nav-btn span.dash-nav-icon{display:none;}
+  .dash-logout-btn,.dash-close-btn{padding:6px 10px;font-size:11px;flex-shrink:0;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-blob3"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Whatever It Takes · WIT · 2026</p>
+    <h1>Noreste<br><span class="highlight">Throw</span>down</h1>
+    <p class="hero-date" id="hero-date-text">Sábado 18 &amp; Domingo 19 de julio · Monterrey, NL</p>
+    <div class="cats">
+      <span class="cat-pill cat-p">🟢 Principiantes</span>
+      <span class="cat-pill cat-i">🔵 Intermedios</span>
+      <span class="cat-pill cat-a">🟣 Abierta</span>
+    </div>
+    <div class="hero-badges">
+      <span class="badge">Equipos de 3</span>
+      <span class="badge">Varonil &amp; Femenil</span>
+      <span class="badge">4 WODs</span>
+    </div>
+    <a class="hero-btn" id="reg-btn" href="https://wodreps.com/info/norestethrowdown?ref=home" target="_blank">
+      📋 Registrar equipo
+    </a>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPanel('wods',this)">WODs</button>
+    <button class="nav-tab" onclick="showPanel('waiver',this)">Carta responsiva</button>
+    <button class="nav-tab" onclick="showPanel('fotos',this)">Fotos</button>
+  </div>
+</div>
+
+<!-- ══ CONTENT ══ -->
+<div class="content">
+
+  <!-- WODs -->
+  <div id="panel-wods" class="panel active">
+    <p class="section-label">Programación · Sábado 18 &amp; Domingo 19 de julio</p>
+
+    <!-- WOD 1 -->
+    <div class="wod-card wod1">
+      <div class="wod-header">
+        <div>
+          <p class="wod-num">WOD 1 · Sábado 18 de julio</p>
+          <p class="wod-name">WOD 1</p>
+          <p class="wod-subtitle">4 Rounds for Time</p>
+          <p class="wod-cap">⏱ Cap time: 15 min</p>
+        </div>
+        <span class="wod-type type-fortime">For Time</span>
+      </div>
+      <div class="wod-movements">
+        <span class="move-pill">20 × 10m Synchro Shuttle Runs</span>
+        <span class="move-pill">45/35 Bike Erg Cals</span>
+      </div>
+      <div class="wod-desc">
+        <strong>¿Cómo funciona?</strong><br>
+        A la cuenta de 3,2,1 los tres atletas comienzan sincronizados su set de 20 shuttle runs de 10m cada uno (10m = 1 rep). La repetición es válida cuando los tres atletas cruzan y tocan la línea hasta completar sus 20 toques. Una vez finalizando los shuttle runs pueden comenzar a repartir las calorías en la bici de la manera que los atletas decidan (uno trabaja, dos descansan).<br><br>
+        El WOD termina cuando la máquina marque la cifra de calorías que corresponde según la categoría de la última ronda y los atletas crucen la línea final.
+      </div>
+      <div class="wod-score">
+        <strong>Score:</strong> Tiempo total en completar las 4 rondas. Si no se completa dentro del cap de 15 min, el score será el total de repeticiones realizadas al expirar el tiempo.
+      </div>
+    </div>
+
+    <!-- WOD 2 -->
+    <div class="wod-card wod2">
+      <div class="wod-header">
+        <div>
+          <p class="wod-num">WOD 2 · Sábado 18 de julio</p>
+          <p class="wod-name">WOD 2</p>
+          <p class="wod-subtitle">For Max Load</p>
+          <p class="wod-cap">⏱ Cap time: 7:30 min</p>
+        </div>
+        <span class="wod-type type-maxload">Max Load</span>
+      </div>
+      <div class="athlete-blocks">
+        <div class="athlete-block">
+          <div class="ath-num">1</div>
+          <span class="ath-move">Hang Squat Clean</span>
+        </div>
+        <div class="athlete-block">
+          <div class="ath-num">2</div>
+          <span class="ath-move">Hang Squat Clean + Front Squat</span>
+        </div>
+        <div class="athlete-block">
+          <div class="ath-num">3</div>
+          <span class="ath-move">Hang Squat Clean + Front Squat + Jerk</span>
+        </div>
+      </div>
+      <div class="wod-desc">
+        <strong>¿Cómo funciona?</strong><br>
+        A la cuenta de 3,2,1 los tres atletas corren al mat y comienzan a cargar la barra para el primer complex en el orden establecido. Cada atleta contará con 2 minutos con 30 segundos para realizar el máximo de libras posibles.
+      </div>
+      <div class="wod-score">
+        <strong>Score:</strong> La suma de las cargas máximas válidas logradas por cada atleta en su complex correspondiente.
+      </div>
+    </div>
+
+    <!-- WOD 3 -->
+    <div class="wod-card wod3" id="wod3-card">
+      <div class="wod-header">
+        <div>
+          <p class="wod-num">WOD 3 · Sábado 18 de julio</p>
+          <p class="wod-name">WOD 3</p>
+        </div>
+        <span class="wod-type type-pending" id="wod3-pill">Aún no disponible</span>
+      </div>
+      <div class="wod-pending-body" id="wod3-body">
+        <span class="wod-coming">⚠️ Aún no disponible</span>
+      </div>
+    </div>
+
+    <!-- WOD 4 -->
+    <div class="wod-card wod4" id="wod4-card">
+      <div class="wod-header">
+        <div>
+          <p class="wod-num">WOD 4 · Domingo 19 de julio</p>
+          <p class="wod-name">WOD 4</p>
+        </div>
+        <span class="wod-type type-pending" id="wod4-pill">Aún no disponible</span>
+      </div>
+      <div class="wod-pending-body" id="wod4-body">
+        <span class="wod-coming">⚠️ Aún no disponible</span>
+      </div>
+    </div>
+
+    <!-- Semifinal announce card -->
+    <div class="semifinal-card">
+      <div class="sf-icon">🏆</div>
+      <div class="sf-content">
+        <h4>Semifinal &amp; Final — Domingo 19 de julio</h4>
+        <p>El formato y los WODs de semifinal y final se revelarán el día del evento. Solo los equipos clasificados participarán en esta etapa decisiva. Mantente atento a nuestro Instagram para cualquier anuncio previo.</p>
+      </div>
+    </div>
+
+    <div class="wod-footer-note">
+      Los WODs 3 y 4 se revelarán el día del evento. 💪<br>
+      <span style="font-size:11px">Síguenos en Instagram para no perderte ningún anuncio.</span>
+    </div>
+  </div>
+
+  <!-- Carta Responsiva -->
+  <div id="panel-waiver" class="panel">
+    <div class="download-box">
+      <div class="dl-icon">📄</div>
+      <div class="dl-text">
+        <h4>Descarga la carta responsiva</h4>
+        <p>Imprime, firma y preséntala en físico el día del evento. Es requisito obligatorio para todos los participantes.</p>
+        <a class="dl-btn" href="CONSENTIMIENTO_INFORMADO.pdf" download="Carta_Responsiva_NoresteThrowdown2026.pdf">
+          ⬇ Descargar PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="waiver-card">
+      <div class="waiver-header">
+        <h3>Registro Digital de Participante</h3>
+        <p>Noreste Throwdown 2026 · Whatever It Takes (WIT)</p>
+      </div>
+      <div class="waiver-body">
+        <div class="waiver-clauses">
+          <h4>1. Participación voluntaria</h4>
+          Reconozco que mi participación en esta competencia es completamente voluntaria y bajo mi propia responsabilidad.
+          <h4>2. Conocimiento de riesgos</h4>
+          Entiendo que las actividades relacionadas con CrossFit implican esfuerzos físicos intensos y riesgos inherentes, incluyendo caídas, golpes, lesiones musculares, esguinces, fracturas, deshidratación, agotamiento físico, alteraciones cardiovasculares y otros accidentes derivados de la práctica deportiva.
+          <h4>3. Condición física y de salud</h4>
+          Declaro que me encuentro en condiciones físicas y médicas adecuadas para participar y asumo total responsabilidad sobre cualquier condición médica preexistente.
+          <h4>4. Cumplimiento de medidas de seguridad</h4>
+          Me comprometo a seguir en todo momento las instrucciones del staff, jueces, organizadores y personal de emergencia.
+          <h4>5. Atención médica y emergencias</h4>
+          Autorizo, en caso de ser necesario, la atención prehospitalaria básica y/o traslado a una unidad médica.
+          <h4>6. Liberación de responsabilidad</h4>
+          Libero de responsabilidad civil a los organizadores, patrocinadores, staff, jueces, sede y colaboradores por lesiones o daños inherentes a la competencia.
+          <h4>7. Uso de imagen</h4>
+          Autorizo el uso de fotografías y videos tomados durante el evento para fines promocionales, sin compensación económica.
+        </div>
+
+        <div id="waiver-form-wrap">
+          <form id="waiver-form" novalidate>
+            <input type="hidden" name="_subject" value="Nueva carta responsiva — Noreste Throwdown 2026">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="nacimiento">Fecha de nacimiento</label>
+                <input type="date" id="nacimiento" name="nacimiento" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="categoria">Categoría del equipo</label>
+                <select id="categoria" name="categoria" required>
+                  <option value="">Selecciona...</option>
+                  <option>Principiantes — Varonil</option>
+                  <option>Principiantes — Femenil</option>
+                  <option>Intermedios — Varonil</option>
+                  <option>Intermedios — Femenil</option>
+                  <option>Abierta — Varonil</option>
+                  <option>Abierta — Femenil</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="equipo">Nombre del equipo</label>
+                <input type="text" id="equipo" name="equipo" placeholder="Nombre de tu equipo" required>
+              </div>
+            </div>
+            <div class="form-row mb12">
+              <div class="form-group">
+                <label class="form-label" for="box">Box / Gym</label>
+                <input type="text" id="box" name="box" placeholder="Nombre de tu box" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="tel">Teléfono</label>
+                <input type="tel" id="tel" name="telefono" placeholder="+52 81 0000 0000" required>
+              </div>
+            </div>
+            <div class="form-group mb12">
+              <label class="form-label" for="emergencia">Contacto de emergencia y teléfono</label>
+              <input type="text" id="emergencia" name="contacto_emergencia" placeholder="Nombre · Número de teléfono" required>
+            </div>
+            <div class="form-group mb12">
+              <label class="form-label" for="medico">Condición médica relevante (opcional)</label>
+              <input type="text" id="medico" name="condicion_medica" placeholder="Alergias, lesiones, medicamentos, etc.">
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="acepto" name="acepto" value="Sí" required>
+              <label for="acepto">He leído y acepto los términos del Noreste Throwdown 2026. Confirmo que participo voluntariamente y que llevaré la carta responsiva firmada en físico el día del evento.</label>
+            </div>
+            <button type="submit" class="submit-btn" id="waiver-submit-btn">Firmar y enviar registro →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fotos -->
+  <div id="panel-fotos" class="panel">
+    <div class="foto-card">
+      <div class="foto-header">
+        <div class="foto-icon">📸</div>
+        <h3>Fotografía Oficial del Evento</h3>
+        <p>Noreste Throwdown 2026 · 18 &amp; 19 de julio</p>
+      </div>
+      <div class="foto-body">
+        <div class="foto-tags">
+          <span class="foto-tag ft-verde">Alta resolución</span>
+          <span class="foto-tag ft-azul">Descarga digital</span>
+          <span class="foto-tag ft-morado">Todos los WODs</span>
+          <span class="foto-tag ft-verde">Individuales &amp; equipos</span>
+        </div>
+        <p>Todas las fotos del evento son tomadas por el fotógrafo oficial. Contáctalo directamente por WhatsApp para adquirir tu galería personal o la de tu equipo.</p>
+        <a class="whatsapp-btn" id="wa-btn" href="https://wa.me/528126235353" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          Contactar al fotógrafo
+        </a>
+      </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery-section">
+      <div class="gallery-section-header">
+        <p class="section-label" style="margin-bottom:0">Galería del Evento</p>
+      </div>
+      <div id="gallery-grid" class="gallery-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- ══ FOOTER ══ -->
+<div class="footer">
+  <p class="footer-logo" id="footer-logo" onclick="handleLogoClick()" title="Noreste Throwdown">Noreste Throwdown</p>
+  <p class="footer-sub">Whatever It Takes · WIT · 2026</p>
+  <a class="footer-social" id="ig-link" href="https://www.instagram.com/whatever_it___takes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    @whatever_it___takes
+  </a>
+  <p class="footer-copy">© 2026 Noreste Throwdown · Whatever It Takes (WIT) · Monterrey, NL</p>
+  <p class="logo-click-hint" id="logo-hint"></p>
+</div>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lightbox" class="lightbox hidden" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+  <div class="lightbox-img-wrap" onclick="event.stopPropagation()">
+    <img id="lightbox-img" src="" alt="Foto del evento">
+    <p id="lightbox-cap" class="lightbox-caption"></p>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dash-overlay" class="dash-overlay">
+
+  <!-- LOGIN -->
+  <div id="dash-login" class="dash-login">
+    <div class="dash-login-card">
+      <div class="dash-login-logo">WIT</div>
+      <h2>Panel de Administración</h2>
+      <p>Noreste Throwdown 2026</p>
+      <div class="dash-field">
+        <label>Usuario</label>
+        <input type="text" id="dash-user" placeholder="Usuario" autocomplete="off">
+      </div>
+      <div class="dash-field">
+        <label>Contraseña</label>
+        <input type="password" id="dash-pass" placeholder="Contraseña">
+      </div>
+      <div class="dash-error" id="dash-error">Usuario o contraseña incorrectos.</div>
+      <button class="dash-btn-primary" onclick="dashLogin()">Ingresar al panel →</button>
+      <button class="dash-btn-ghost" onclick="closeDashboard()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="dash-admin" class="dash-admin">
+    <div class="dash-sidebar">
+      <div class="dash-brand">
+        <div class="dash-brand-wrd">WIT</div>
+        <div class="dash-brand-sub">Admin Panel</div>
+      </div>
+      <nav class="dash-nav">
+        <button class="dash-nav-btn active" data-tab="metrics" onclick="switchDashTab('metrics',this)">
+          <span class="dash-nav-icon">📊</span> Métricas
+        </button>
+        <button class="dash-nav-btn" data-tab="gallery" onclick="switchDashTab('gallery',this)">
+          <span class="dash-nav-icon">🖼️</span> Galería
+        </button>
+        <button class="dash-nav-btn" data-tab="content" onclick="switchDashTab('content',this)">
+          <span class="dash-nav-icon">✏️</span> Contenido
+        </button>
+        <button class="dash-nav-btn" data-tab="appearance" onclick="switchDashTab('appearance',this)">
+          <span class="dash-nav-icon">🎨</span> Apariencia
+        </button>
+      </nav>
+      <button class="dash-close-btn" onclick="closeDashboard()">← Volver al sitio</button>
+      <button class="dash-logout-btn" onclick="dashLogout()">🚪 Cerrar sesión</button>
+    </div>
+
+    <div class="dash-main">
+
+      <!-- TAB: Métricas -->
+      <div id="dash-tab-metrics" class="dash-tab active">
+        <h2 class="dash-tab-title">Métricas del Evento</h2>
+        <p class="dash-tab-sub">Actividad registrada en este navegador.</p>
+
+        <div class="dm-grid">
+          <div class="dm-card">
+            <div class="dm-label">Sesiones totales</div>
+            <div class="dm-value" id="dm-total">0</div>
+            <div class="dm-meta">Visitas únicas</div>
+          </div>
+          <div class="dm-card dm-accent">
+            <div class="dm-label">Visitas hoy</div>
+            <div class="dm-value" id="dm-today">0</div>
+            <div class="dm-meta" id="dm-last">—</div>
+          </div>
+          <div class="dm-card dm-green">
+            <div class="dm-label">Formularios</div>
+            <div class="dm-value" id="dm-forms">0</div>
+            <div class="dm-meta">Cartas enviadas</div>
+          </div>
+        </div>
+
+        <div class="dm-chart-card">
+          <div class="dm-chart-title">Actividad · últimos 7 días</div>
+          <div class="dm-bars" id="dm-chart"></div>
+        </div>
+
+        <div class="dm-tabs-activity">
+          <div class="dm-chart-title" style="margin-bottom:.75rem">Sección más visitada</div>
+          <div class="dm-act-row">
+            <span class="dm-act-label">WODs</span>
+            <div class="dm-act-track"><div class="dm-act-fill" id="dm-fill-wods" style="width:0%"></div></div>
+            <span class="dm-act-pct" id="dm-pct-wods">0%</span>
+          </div>
+          <div class="dm-act-row">
+            <span class="dm-act-label">Waiver</span>
+            <div class="dm-act-track"><div class="dm-act-fill" id="dm-fill-waiver" style="width:0%"></div></div>
+            <span class="dm-act-pct" id="dm-pct-waiver">0%</span>
+          </div>
+          <div class="dm-act-row">
+            <span class="dm-act-label">Fotos</span>
+            <div class="dm-act-track"><div class="dm-act-fill" id="dm-fill-fotos" style="width:0%"></div></div>
+            <span class="dm-act-pct" id="dm-pct-fotos">0%</span>
+          </div>
+        </div>
+
+        <p class="dm-note">
+          📡 Estas métricas son locales a este navegador. Para análisis globales de tráfico en tiempo real, te recomendamos integrar <strong>Google Analytics</strong> o <strong>Plausible</strong> al sitio.
+        </p>
+      </div>
+
+      <!-- TAB: Galería -->
+      <div id="dash-tab-gallery" class="dash-tab">
+        <h2 class="dash-tab-title">Gestión de Galería</h2>
+
+        <div class="dash-section-card">
+          <h3>Agregar foto</h3>
+          <div class="dash-field-group">
+            <label class="dash-label">URL de la imagen</label>
+            <input type="url" class="dash-input" id="add-photo-url" placeholder="https://ejemplo.com/foto.jpg">
+          </div>
+          <div class="dash-field-group">
+            <label class="dash-label">Título / Descripción (opcional)</label>
+            <input type="text" class="dash-input" id="add-photo-cap" placeholder="WOD 1 — Equipos masculinos">
+          </div>
+          <button class="dash-btn-sm green" onclick="addPhoto()" style="margin-top:6px">+ Agregar foto</button>
+        </div>
+
+        <div class="dash-section-card">
+          <h3>Fotos en galería (<span id="gallery-count">0</span>)</h3>
+          <div class="dash-gallery-grid" id="dash-gallery-list"></div>
+        </div>
+      </div>
+
+      <!-- TAB: Contenido -->
+      <div id="dash-tab-content" class="dash-tab">
+        <h2 class="dash-tab-title">Editar Contenido</h2>
+
+        <div class="dash-section-card">
+          <h3>Estado de WODs</h3>
+          <div class="wod-toggle-row">
+            <div>
+              <div class="wod-toggle-label">WOD 3 — Sábado</div>
+              <div class="wod-toggle-status" id="wod3-status-label">Aún no disponible</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="wod3-toggle" onchange="toggleWod(3,this.checked)">
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+          <div class="wod-toggle-row">
+            <div>
+              <div class="wod-toggle-label">WOD 4 — Domingo</div>
+              <div class="wod-toggle-status" id="wod4-status-label">Aún no disponible</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="wod4-toggle" onchange="toggleWod(4,this.checked)">
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+          <div id="wod3-reveal-fields" style="display:none;margin-top:12px">
+            <label class="dash-label">Descripción WOD 3 (texto a mostrar)</label>
+            <textarea class="dash-input" id="wod3-desc-text" rows="3" placeholder="Ej: 21-15-9 Thrusters / Pull-ups" style="resize:vertical"></textarea>
+          </div>
+          <div id="wod4-reveal-fields" style="display:none;margin-top:12px">
+            <label class="dash-label">Descripción WOD 4 / Final (texto a mostrar)</label>
+            <textarea class="dash-input" id="wod4-desc-text" rows="3" placeholder="Ej: AMRAP 20 min..." style="resize:vertical"></textarea>
+          </div>
+        </div>
+
+        <div class="dash-section-card">
+          <h3>Links y contactos</h3>
+          <div class="dash-field-group">
+            <label class="dash-label">URL de registro (WodReps)</label>
+            <input type="url" class="dash-input" id="dash-reg-url" placeholder="https://wodreps.com/...">
+          </div>
+          <div class="dash-field-group">
+            <label class="dash-label">WhatsApp del fotógrafo (solo números)</label>
+            <input type="text" class="dash-input" id="dash-wa-num" placeholder="528126235353">
+          </div>
+          <div class="dash-field-group">
+            <label class="dash-label">Instagram handle (sin @)</label>
+            <input type="text" class="dash-input" id="dash-ig" placeholder="whatever_it___takes">
+          </div>
+        </div>
+
+        <button class="dash-save-btn" onclick="saveContentSettings()">Guardar cambios</button>
+      </div>
+
+      <!-- TAB: Apariencia -->
+      <div id="dash-tab-appearance" class="dash-tab">
+        <h2 class="dash-tab-title">Apariencia</h2>
+
+        <div class="dash-section-card">
+          <h3>Color principal</h3>
+          <p style="font-size:12px;color:var(--gris-texto);margin-bottom:12px">Modifica el color de acento en botones, highlights y detalles del sitio.</p>
+          <div class="color-presets">
+            <div class="color-swatch-wrap">
+              <div class="color-dot selected" style="background:#7C3AED" onclick="pickColor('#7C3AED',this)" title="Morado"></div>
+              <span class="color-swatch-label">Morado</span>
+            </div>
+            <div class="color-swatch-wrap">
+              <div class="color-dot" style="background:#2563EB" onclick="pickColor('#2563EB',this)" title="Azul"></div>
+              <span class="color-swatch-label">Azul</span>
+            </div>
+            <div class="color-swatch-wrap">
+              <div class="color-dot" style="background:#059669" onclick="pickColor('#059669',this)" title="Verde"></div>
+              <span class="color-swatch-label">Verde</span>
+            </div>
+            <div class="color-swatch-wrap">
+              <div class="color-dot" style="background:#DC2626" onclick="pickColor('#DC2626',this)" title="Rojo"></div>
+              <span class="color-swatch-label">Rojo</span>
+            </div>
+            <div class="color-swatch-wrap">
+              <div class="color-dot" style="background:#EA580C" onclick="pickColor('#EA580C',this)" title="Naranja"></div>
+              <span class="color-swatch-label">Naranja</span>
+            </div>
+            <div class="color-swatch-wrap">
+              <div class="color-dot" style="background:#0891B2" onclick="pickColor('#0891B2',this)" title="Cyan"></div>
+              <span class="color-swatch-label">Cyan</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+            <label class="dash-label" style="margin:0;white-space:nowrap">Color personalizado:</label>
+            <input type="color" id="custom-color-picker" value="#7C3AED" style="width:40px;height:32px;border:1px solid var(--gris-borde);border-radius:6px;cursor:pointer;padding:2px;" oninput="pickColorCustom(this.value)">
+          </div>
+        </div>
+
+        <button class="dash-save-btn" onclick="saveAppearance()">Aplicar apariencia</button>
+      </div>
+
+    </div><!-- /dash-main -->
+  </div><!-- /dash-admin -->
+
+</div><!-- /dash-overlay -->
+
+<script>
+/* ═══════════════════════════════════════
+   ANALYTICS
+═══════════════════════════════════════ */
+function getA(){return JSON.parse(localStorage.getItem('wit_a')||'{}')}
+function setA(d){localStorage.setItem('wit_a',JSON.stringify(d))}
+
+function trackVisit(){
+  if(sessionStorage.getItem('_vs'))return;
+  sessionStorage.setItem('_vs','1');
+  var a=getA();
+  a.total=(a.total||0)+1;
+  var t=todayKey();
+  a.daily=a.daily||{};
+  a.daily[t]=(a.daily[t]||0)+1;
+  a.last=new Date().toISOString();
+  setA(a);
+}
+
+function trackTab(name){
+  var a=getA();
+  a.tabs=a.tabs||{wods:0,waiver:0,fotos:0};
+  a.tabs[name]=(a.tabs[name]||0)+1;
+  setA(a);
+}
+
+function trackForm(){
+  var a=getA();
+  a.forms=(a.forms||0)+1;
+  setA(a);
+}
+
+function trackGallery(){
+  var a=getA();
+  a.gallery=(a.gallery||0)+1;
+  setA(a);
+}
+
+function todayKey(){
+  return new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'2-digit'});
+}
+
+/* ═══════════════════════════════════════
+   TABS (main site)
+═══════════════════════════════════════ */
+function showPanel(name,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('panel-'+name).classList.add('active');
+  if(btn)btn.classList.add('active');
+  trackTab(name);
+  var nw=document.querySelector('.nav-wrap');
+  if(nw)window.scrollTo({top:nw.offsetTop-4,behavior:'smooth'});
+}
+
+/* ═══════════════════════════════════════
+   LOGO SECRET CLICK
+═══════════════════════════════════════ */
+var logoClicks=0,logoTimer=null;
+function handleLogoClick(){
+  logoClicks++;
+  var hint=document.getElementById('logo-hint');
+  clearTimeout(logoTimer);
+  if(logoClicks>=4){
+    logoClicks=0;
+    if(hint)hint.textContent='';
+    openDashboard();
+  } else {
+    var left=4-logoClicks;
+    if(hint)hint.textContent=left+' clic'+(left>1?'s':'')+' más…';
+    var logo=document.getElementById('footer-logo');
+    if(logo){logo.classList.remove('logo-ping');void logo.offsetWidth;logo.classList.add('logo-ping');}
+    logoTimer=setTimeout(function(){
+      logoClicks=0;
+      if(hint)hint.textContent='';
+    },3000);
+  }
+}
+
+/* ═══════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════ */
+function openDashboard(){
+  var ov=document.getElementById('dash-overlay');
+  ov.style.display='block';
+  requestAnimationFrame(function(){ov.classList.add('dash-show');});
+  if(sessionStorage.getItem('_auth')==='1'){
+    showAdmin();
+  } else {
+    showLogin();
+  }
+}
+
+function closeDashboard(){
+  var ov=document.getElementById('dash-overlay');
+  ov.classList.remove('dash-show');
+  setTimeout(function(){ov.style.display='none';},320);
+}
+
+function showLogin(){
+  document.getElementById('dash-login').classList.add('active');
+  document.getElementById('dash-admin').classList.remove('active');
+  document.getElementById('dash-error').style.display='none';
+  document.getElementById('dash-user').value='';
+  document.getElementById('dash-pass').value='';
+  setTimeout(function(){document.getElementById('dash-user').focus();},50);
+}
+
+function showAdmin(){
+  document.getElementById('dash-login').classList.remove('active');
+  document.getElementById('dash-admin').classList.add('active');
+  switchDashTab('metrics',document.querySelector('.dash-nav-btn[data-tab="metrics"]'));
+  renderMetrics();
+  renderDashGallery();
+  loadContentFields();
+  loadAppearanceFields();
+}
+
+function dashLogin(){
+  var u=document.getElementById('dash-user').value.trim();
+  var p=document.getElementById('dash-pass').value.trim();
+  if(u==='WIT'&&p==='7777'){
+    sessionStorage.setItem('_auth','1');
+    document.getElementById('dash-error').style.display='none';
+    showAdmin();
+  } else {
+    document.getElementById('dash-error').style.display='block';
+    document.getElementById('dash-pass').value='';
+    document.getElementById('dash-pass').focus();
+  }
+}
+
+function dashLogout(){
+  sessionStorage.removeItem('_auth');
+  showLogin();
+}
+
+function switchDashTab(name,btn){
+  document.querySelectorAll('.dash-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.dash-nav-btn').forEach(function(b){b.classList.remove('active');});
+  var tab=document.getElementById('dash-tab-'+name);
+  if(tab)tab.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='metrics')renderMetrics();
+  if(name==='gallery')renderDashGallery();
+}
+
+/* ═══════════════════════════════════════
+   METRICS
+═══════════════════════════════════════ */
+function renderMetrics(){
+  var a=getA();
+  setText('dm-total',a.total||0);
+  var today=todayKey();
+  setText('dm-today',(a.daily||{})[today]||0);
+  setText('dm-forms',a.forms||0);
+  if(a.last){
+    var d=new Date(a.last);
+    setText('dm-last','Última: '+d.toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}));
+  }
+  renderChart(a.daily||{});
+  var tabs=a.tabs||{wods:0,waiver:0,fotos:0};
+  var total=(tabs.wods||0)+(tabs.waiver||0)+(tabs.fotos||0)||1;
+  ['wods','waiver','fotos'].forEach(function(k){
+    var pct=Math.round(((tabs[k]||0)/total)*100);
+    var fill=document.getElementById('dm-fill-'+k);
+    var pctEl=document.getElementById('dm-pct-'+k);
+    if(fill)fill.style.width=pct+'%';
+    if(pctEl)pctEl.textContent=pct+'%';
+  });
+}
+
+function renderChart(daily){
+  var el=document.getElementById('dm-chart');
+  if(!el)return;
+  var days=[],DAYS_LABEL=['dom','lun','mar','mié','jue','vie','sáb'];
+  for(var i=6;i>=0;i--){
+    var d=new Date();
+    d.setDate(d.getDate()-i);
+    var key=d.toLocaleDateString('es-MX',{day:'2-digit',month:'2-digit'});
+    days.push({lbl:DAYS_LABEL[d.getDay()],count:daily[key]||0});
+  }
+  var max=Math.max.apply(null,days.map(function(d){return d.count;}))||1;
+  el.innerHTML=days.map(function(d){
+    var h=Math.max(4,Math.round((d.count/max)*100));
+    return '<div class="dm-bar-col"><div class="dm-bar-track"><div class="dm-bar" style="height:'+h+'%"></div></div><div class="dm-bar-lbl">'+d.lbl+'</div></div>';
+  }).join('');
+}
+
+function setText(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
+
+/* ═══════════════════════════════════════
+   GALLERY
+═══════════════════════════════════════ */
+function getGallery(){return JSON.parse(localStorage.getItem('wit_g')||'[]');}
+function setGallery(g){localStorage.setItem('wit_g',JSON.stringify(g));}
+
+function addPhoto(){
+  var url=document.getElementById('add-photo-url').value.trim();
+  var cap=document.getElementById('add-photo-cap').value.trim();
+  if(!url||!/^https?:\/\//.test(url)){showToast('Ingresa una URL válida (https://...)','error');return;}
+  var g=getGallery();
+  g.push({url:url,cap:cap,id:Date.now()});
+  setGallery(g);
+  document.getElementById('add-photo-url').value='';
+  document.getElementById('add-photo-cap').value='';
+  renderDashGallery();
+  renderPublicGallery();
+  showToast('Foto agregada a la galería','success');
+}
+
+function removePhoto(id){
+  setGallery(getGallery().filter(function(p){return p.id!==id;}));
+  renderDashGallery();
+  renderPublicGallery();
+  showToast('Foto eliminada','info');
+}
+
+function renderPublicGallery(){
+  var g=getGallery();
+  var el=document.getElementById('gallery-grid');
+  if(!el)return;
+  if(!g.length){
+    el.innerHTML='<div class="gallery-empty">📷<br>Galería del evento próximamente.<br><small style="font-size:11px;opacity:.7">Las fotos se publicarán después del evento.</small></div>';
+    return;
+  }
+  el.innerHTML=g.map(function(p){
+    var c=p.cap?p.cap.replace(/'/g,'&#39;'):'';
+    return '<div class="gallery-item" onclick="openLightbox(\''+p.url.replace(/'/g,'&#39;')+'\',\''+c+'\')">'
+      +'<img src="'+p.url+'" alt="'+(p.cap||'Foto del evento')+'" loading="lazy" onerror="this.closest(\'.gallery-item\').style.display=\'none\'">'
+      +'<div class="gallery-overlay"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderDashGallery(){
+  var g=getGallery();
+  var el=document.getElementById('dash-gallery-list');
+  var cnt=document.getElementById('gallery-count');
+  if(cnt)cnt.textContent=g.length;
+  if(!el)return;
+  if(!g.length){
+    el.innerHTML='<div class="dash-gallery-empty">Aún no hay fotos. Agrégalas arriba usando una URL.</div>';
+    return;
+  }
+  el.innerHTML=g.map(function(p){
+    return '<div class="dash-photo"><img src="'+p.url+'" alt="'+( p.cap||'')+'" loading="lazy" onerror="this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 60 60%22><rect fill=%22%23eee%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2234%22 text-anchor=%22middle%22 font-size=%228%22 fill=%22%23aaa%22>Error</text></svg>\'">'
+      +'<button class="dash-photo-del" onclick="removePhoto('+p.id+')">×</button>'
+      +'</div>';
+  }).join('');
+}
+
+/* ═══════════════════════════════════════
+   CONTENT SETTINGS
+═══════════════════════════════════════ */
+var DEF={regUrl:'https://wodreps.com/info/norestethrowdown?ref=home',waNum:'528126235353',ig:'whatever_it___takes',color:'#7C3AED',wod3:false,wod4:false,wod3Text:'',wod4Text:''};
+
+function getCfg(){return Object.assign({},DEF,JSON.parse(localStorage.getItem('wit_cfg')||'{}'));}
+function setCfg(c){localStorage.setItem('wit_cfg',JSON.stringify(c));}
+
+function applyConfig(){
+  var c=getCfg();
+  var rb=document.getElementById('reg-btn');
+  if(rb)rb.href=c.regUrl;
+  var wa=document.getElementById('wa-btn');
+  if(wa)wa.href='https://wa.me/'+c.waNum;
+  document.documentElement.style.setProperty('--morado',c.color);
+  applyWodState(3,c.wod3,c.wod3Text);
+  applyWodState(4,c.wod4,c.wod4Text);
+}
+
+function applyWodState(n,published,text){
+  var body=document.getElementById('wod'+n+'-body');
+  var pill=document.getElementById('wod'+n+'-pill');
+  if(!body||!pill)return;
+  if(published&&text){
+    body.innerHTML='<div class="wod-desc" style="margin:0 1.25rem 1.25rem">'+escHtml(text)+'</div>';
+    pill.textContent='Publicado';
+    pill.className='wod-type type-fortime';
+  } else if(published){
+    body.innerHTML='<span class="wod-coming">✅ Disponible — revisa con tu coach</span>';
+    pill.textContent='Publicado';
+    pill.className='wod-type type-fortime';
+  } else {
+    body.innerHTML='<span class="wod-coming">⚠️ Aún no disponible</span>';
+    pill.textContent='Aún no disponible';
+    pill.className='wod-type type-pending';
+  }
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+
+function loadContentFields(){
+  var c=getCfg();
+  var set=function(id,val){var el=document.getElementById(id);if(el)el.value=val;};
+  set('dash-reg-url',c.regUrl);
+  set('dash-wa-num',c.waNum);
+  set('dash-ig',c.ig);
+  var t3=document.getElementById('wod3-toggle');
+  var t4=document.getElementById('wod4-toggle');
+  if(t3){t3.checked=c.wod3; toggleWod(3,c.wod3,true);}
+  if(t4){t4.checked=c.wod4; toggleWod(4,c.wod4,true);}
+  set('wod3-desc-text',c.wod3Text);
+  set('wod4-desc-text',c.wod4Text);
+}
+
+function toggleWod(n,on,silent){
+  var fields=document.getElementById('wod'+n+'-reveal-fields');
+  var label=document.getElementById('wod'+n+'-status-label');
+  if(fields)fields.style.display=on?'block':'none';
+  if(label)label.textContent=on?'Publicado':'Aún no disponible';
+  if(!silent){
+    var c=getCfg();
+    c['wod'+n]=on;
+    var txt=document.getElementById('wod'+n+'-desc-text');
+    if(txt)c['wod'+n+'Text']=txt.value;
+    setCfg(c);
+    applyWodState(n,on,c['wod'+n+'Text']);
+  }
+}
+
+function saveContentSettings(){
+  var c=getCfg();
+  var get=function(id){var el=document.getElementById(id);return el?el.value.trim():'';};
+  var url=get('dash-reg-url'); if(url)c.regUrl=url;
+  var wa=get('dash-wa-num'); if(wa)c.waNum=wa;
+  var ig=get('dash-ig'); if(ig)c.ig=ig;
+  c.wod3=document.getElementById('wod3-toggle').checked;
+  c.wod4=document.getElementById('wod4-toggle').checked;
+  c.wod3Text=get('wod3-desc-text');
+  c.wod4Text=get('wod4-desc-text');
+  setCfg(c);
+  applyConfig();
+  showToast('Cambios guardados','success');
+}
+
+/* ═══════════════════════════════════════
+   APPEARANCE
+═══════════════════════════════════════ */
+var _pendingColor='#7C3AED';
+
+function pickColor(hex,el){
+  _pendingColor=hex;
+  document.querySelectorAll('.color-dot').forEach(function(d){d.classList.remove('selected');});
+  if(el)el.classList.add('selected');
+  document.getElementById('custom-color-picker').value=hex;
+  document.documentElement.style.setProperty('--morado',hex);
+}
+
+function pickColorCustom(hex){
+  _pendingColor=hex;
+  document.querySelectorAll('.color-dot').forEach(function(d){d.classList.remove('selected');});
+  document.documentElement.style.setProperty('--morado',hex);
+}
+
+function loadAppearanceFields(){
+  var c=getCfg();
+  _pendingColor=c.color;
+  document.getElementById('custom-color-picker').value=c.color;
+}
+
+function saveAppearance(){
+  var c=getCfg();
+  c.color=_pendingColor;
+  setCfg(c);
+  document.documentElement.style.setProperty('--morado',c.color);
+  showToast('Tema aplicado','success');
+}
+
+/* ═══════════════════════════════════════
+   LIGHTBOX
+═══════════════════════════════════════ */
+function openLightbox(url,cap){
+  document.getElementById('lightbox-img').src=url;
+  var capEl=document.getElementById('lightbox-cap');
+  if(capEl)capEl.textContent=cap||'';
+  document.getElementById('lightbox').classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  trackGallery();
+}
+function closeLightbox(e){
+  if(e&&e.target&&e.target.closest&&e.target.closest('.lightbox-img-wrap')&&!e.target.classList.contains('lightbox-close'))return;
+  document.getElementById('lightbox').classList.add('hidden');
+  document.body.style.overflow='';
+}
+
+/* ═══════════════════════════════════════
+   FORM SUBMISSION
+═══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',function(){
+  var form=document.getElementById('waiver-form');
+  if(form){
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();
+      if(!form.checkValidity()){form.reportValidity();return;}
+      var btn=document.getElementById('waiver-submit-btn');
+      btn.textContent='Enviando…';
+      btn.disabled=true;
+      try{
+        var fd=new FormData(form);
+        var res=await fetch('https://formspree.io/lermafloresalfredo@gmail.com',{
+          method:'POST',body:fd,headers:{'Accept':'application/json'}
+        });
+        if(res.ok){
+          trackForm();
+          document.getElementById('waiver-form-wrap').innerHTML=
+            '<div class="form-success"><div class="success-icon">✅</div>'
+            +'<h4>Registro enviado</h4>'
+            +'<p>Tu carta fue enviada a <strong>lermafloresalfredo@gmail.com</strong>.<br>Recuerda llevar la carta firmada en físico el día del evento.</p>'
+            +'<button class="submit-btn" style="margin-top:1.5rem;max-width:280px" onclick="resetForm()">Enviar otro registro</button>'
+            +'</div>';
+        } else { throw new Error('error'); }
+      } catch(_){
+        showToast('Error al enviar. Verifica tu conexión e inténtalo de nuevo.','error');
+        btn.textContent='Firmar y enviar registro →';
+        btn.disabled=false;
+      }
+    });
+  }
+
+  // ESC key
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      closeLightbox({target:document.getElementById('lightbox')});
+      closeDashboard();
+    }
+    if(e.key==='Enter'&&document.getElementById('dash-user')===document.activeElement){
+      document.getElementById('dash-pass').focus();
+    }
+  });
+
+  // Enter in pass field
+  var passField=document.getElementById('dash-pass');
+  if(passField)passField.addEventListener('keydown',function(e){if(e.key==='Enter')dashLogin();});
+
+  // Init
+  trackVisit();
+  renderPublicGallery();
+  applyConfig();
+});
+
+function resetForm(){
+  document.getElementById('waiver-form-wrap').innerHTML=
+    '<form id="waiver-form" novalidate>'
+    +document.getElementById('waiver-form-wrap').innerHTML;
+  location.reload();
+}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+var _toastEl=null,_toastTimer=null;
+function showToast(msg,type){
+  if(!_toastEl){_toastEl=document.createElement('div');_toastEl.className='toast';document.body.appendChild(_toastEl);}
+  _toastEl.textContent=msg;
+  _toastEl.className='toast toast-'+(type||'success');
+  clearTimeout(_toastTimer);
+  requestAnimationFrame(function(){_toastEl.classList.add('visible');});
+  _toastTimer=setTimeout(function(){_toastEl.classList.remove('visible');},3500);
+}
+</script>
+</body>
+</html>
